@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>  
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Nice Dog Dude</title>
+        <link rel="shortcut icon" href= "https://cdn.discordapp.com/attachments/454248926963564556/456516632018419712/DogIcon.jpg"> 
+        <!-- Load In Scripts -->
+        <script src = "http://code.jquery.com/jquery-latest.min.js"></script>
+        <script src = "C:\Users\Larry\Desktop\DogWebsite\Scripts.js"> </script>
+        <!-- CSS -->
+        <style>
+            /*-------------- Background --------------*/
+            html, body {
+                margin: 0;  
+                overflow: hidden;
+            }
+            #Background {
+                position:absolute;
+                z-index: -1;
+            }
+            div {
+                user-select:none;
+                -moz-user-select: -moz-none;
+                -ms-user-select: none;
+                -webkit-user-select: none;
+            }
+            /*-------------- Buttons --------------*/
+            /*--- Button Image ---*/
+            .ButtonImg {
+                width:100%;
+                height:100%;    
+            }
+            /*--- Button ---*/
+            button {
+                position:absolute;
+                outline:none;           
+                border:none;
+            }
+            .ArrowButton {
+                background-color:transparent;
+                width:7%;
+                height:14%;
+                min-width: 20px;
+                min-height: 40px;
+                opacity: 0.4;
+                z-index: 2;
+            }
+            .ArrowButton#ButtonRight {
+                bottom: 6%;
+                right: 2%;
+            }
+            .ArrowButton#ButtonLeft {
+                bottom: 6%;
+                left: 2%
+            }
+            /*-------------- Image Title --------------*/
+            #TitleWrapper {
+                position:absolute;
+                left:25%; top: 10%;
+                width:50%;
+                height:8%;
+                overflow:hidden;
+            }
+            #ImgTitle {
+                position:absolute;
+                left:0; right:0; top: -5%;
+                text-align:center;
+                font-weight:900;
+                font-size: 7vmin;
+                text-shadow: 0.1rem 0.1rem 0.5rem black, -0.1rem -0.1rem 0.5rem black;
+                color:rgb(0, 255, 100);
+            }
+            /*-------------- View Box --------------*/
+            #Viewbox {
+                position:absolute;
+                width:60%;
+                height:55%;
+                left:20%;
+                top:20%;
+            }
+            #Viewbox ImgWrapper {
+                position:relative;
+                width:100%;
+                height:100%;               
+            }
+            #Viewport {
+                position:absolute;
+                top: 0; bottom:0; left: 0; right:0;
+                margin:auto;
+                max-width: 100%;
+                max-height: 100%;
+                border: 0.3em solid black;       
+            }
+            /*-------------- Scroll Boxes --------------*/
+            #ScrollBox {
+                position:absolute;
+                margin:0px;
+                padding:0px;
+                width:75%;
+                height:14%;
+                bottom:6%;
+                left:12.5%;
+            }
+            #ScrollWrapper {
+                position:relative;
+                margin:0;
+                padding:0;
+                height:100%;
+                width:100%;
+                overflow-x:hidden;
+                overflow-y:hidden;
+                white-space:nowrap;
+                box-shadow: 0 0.3em 1em 0 black, 0 -0.3em 1em 0 black, 0.1em 0 1em 0 red, -0.1em 0 1em 0 red;
+            }
+            #ScrollBox img {
+                position:relative;
+                bottom:3%;
+                height:80%;
+                width: 15%;   
+                margin:0.5em; 
+                padding:0;        
+            }       
+        </style>
+    </head>
+
+
+    <body> 
+        <!-- Background Image -->
+        <img id = "Background" src = "http://svite-league-apps-content.s3.amazonaws.com/bgimages/wood.jpg">
+        <!-- ButtonRight -->
+        <button class="ArrowButton" id="ButtonRight" onmouseover="ButtonHover('ButtonRight')" onmouseout="ButtonUnhover('ButtonRight')" onmousedown="ButtonMouseDown('ButtonRight')" 
+        onmouseup = "ButtonMouseUp('ButtonRight')" onclick="GoRight()">
+            <img class = "ButtonImg" src = "C:/Users/Larry/Desktop/DogWebsite/Images/ButtonRight.png">
+        </button>
+        <!-- ButtonLeft -->
+        <button class="ArrowButton" id="ButtonLeft" onmouseover="ButtonHover('ButtonLeft')" onmouseout="ButtonUnhover('ButtonLeft')" onmousedown="ButtonMouseDown('ButtonLeft')" 
+        onmouseup = "ButtonMouseUp('ButtonLeft')" onclick="GoLeft()">
+            <img class = "ButtonImg" src = "C:/Users/Larry/Desktop/DogWebsite/Images/ButtonLeft.png">
+        </button>
+        <!-- Image Title -->
+        <div id = "TitleWrapper">
+            <div id = "ImgTitle"> 
+                <!-- Text Inserted via script-->
+            </div>
+        </div>
+        <!-- View Box -->
+        <div id = "Viewbox">
+            <div id = "ImgWrapper">
+                <img id = "Viewport">    
+            </div>
+        </div>
+        <!-- Scroll Box -->
+        <div id = "ScrollBox">
+            <div id = "ScrollWrapper">
+                <!-- Images To Be Inserted via script -->
+            </div>
+        </div>
+    </body>
+
+    <!-- Resize Scripts -->
+    <script>
+        $(window).load(function() { SetVariables(); UpdateBackgroundSize(); LoadInPictures(); AddEventListeners(); });
+        $(window).resize(function() {UpdateBackgroundSize(); UpdateScrollBox();});
+    </script>
+</html>
