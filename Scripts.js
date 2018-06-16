@@ -73,6 +73,12 @@ function AddEventListeners() {
         else if (event.key == "ArrowLeft") 
             GoLeft();
     });
+    window.addEventListener('mousewheel', function(e) {
+        if (e.wheelDelta < 0) 
+            GoRight(); 
+        else 
+            GoLeft();
+    });
 }
 
 
