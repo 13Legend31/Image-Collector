@@ -2,6 +2,8 @@ var IMGs = [];
 var x = 0;
 var Last = 0;
 var Wndw = $(window);
+var InputBx;
+var JSON;
 var BrdrImg;
 var ScImgBrdr = '0.3em dotted rgb(0, 153, 255)';
 var ScImgHovBrdr = '0.2em dotted rgb(0, 153, 255)';
@@ -18,6 +20,7 @@ var ScRBnd;
 var ScImgWd;
 
 function SetVar() {
+    InputBx = $("#JSON");
     ScBx = $("#ScBox");
     Vw = $("#Vw");
     Title = $("#Title");
@@ -28,7 +31,9 @@ function UpdateSizes() {
 }
 
 function LoadPics() {
-    $.getJSON("https://api.myjson.com/bins/lenfy", function(data) {
+    ScBx.empty();
+    IMGs = [];
+    $.getJSON(JSON, function(data) {
         $.each(data, function(key, val) {
             var ScIMG = $(document.createElement('img'));
             ScBx.append(ScIMG);   
@@ -57,15 +62,18 @@ function UpdateScrollInfo() {
     ScWd = ScBx.width();
     ScLBnd = ScBx.scrollLeft();
     ScRBnd = ScLBnd + ScWd;
-    ScImgWd = parseInt(IMGs[0].IMG.css('width')) + 2 * parseInt(IMGs[0].IMG.css('margin-left'));
+    if (IMGs.length > 0)
+        ScImgWd = parseInt(IMGs[0].IMG.css('width')) + 2 * parseInt(IMGs[0].IMG.css('margin-left'));
 }
 
 function AddEventListeners() {
     window.addEventListener("keydown", function(event) { 
-        if (event.key == "ArrowRight") 
+        if (event.keyCode == 39) 
             GoRight();
-        else if (event.key == "ArrowLeft") 
+        else if (event.keyCode == 37) 
             GoLeft();
+        else if (event.keyCode == 13) 
+            LoadJSON();
     });
     window.addEventListener('mousewheel', function(e) {
         if (e.wheelDelta < 0) 
@@ -97,42 +105,46 @@ function BtnMUp(ID) {
 }
 
 function GoRight() {
-    if (x == 0)
-        BrdrImg.css('border', ScFstImgBrdr);
-    else 
-        BrdrImg.css('border', 'none');
-    x = (x == Last) ? 0 : x + 1;
-    BrdrImg = IMGs[x].IMG;
-    Vw.attr('src', IMGs[x].src);
-    BrdrImg.css('border', ScImgBrdr);
-    Title.text(IMGs[x].title);
+    if (IMGs.length != 0) {
+        if (x == 0)
+            BrdrImg.css('border', ScFstImgBrdr);
+        else 
+            BrdrImg.css('border', 'none');
+        x = (x == Last) ? 0 : x + 1;
+        BrdrImg = IMGs[x].IMG;
+        Vw.attr('src', IMGs[x].src);
+        BrdrImg.css('border', ScImgBrdr);
+        Title.text(IMGs[x].title);
 
-    var LPos = x * ScImgWd;
-    var RPos = LPos + ScImgWd;
-    if (RPos > ScRBnd) 
-        ScBx.scrollLeft(LPos);
-    else if (LPos < ScLBnd) 
+        var LPos = x * ScImgWd;
+        var RPos = LPos + ScImgWd;
+        if (RPos > ScRBnd) 
+            ScBx.scrollLeft(LPos);
+        else if (LPos < ScLBnd) 
         ScBx.scrollLeft(RPos - ScWd);      
+    }   
     
 }
 
 function GoLeft() {
-    if (x == 0)
-        BrdrImg.css('border', ScFstImgBrdr);
-    else 
-        BrdrImg.css('border', 'none');
-    x = (x == 0) ? Last : x - 1;
-    BrdrImg = IMGs[x].IMG;
-    Vw.attr('src', IMGs[x].src);
-    BrdrImg.css('border', ScImgBrdr);
-    Title.text(IMGs[x].title);
+    if (IMGs.length != 0) {
+        if (x == 0)
+            BrdrImg.css('border', ScFstImgBrdr);
+        else 
+            BrdrImg.css('border', 'none');
+        x = (x == 0) ? Last : x - 1;
+        BrdrImg = IMGs[x].IMG;
+        Vw.attr('src', IMGs[x].src);
+        BrdrImg.css('border', ScImgBrdr);
+        Title.text(IMGs[x].title);
 
-    var LPos = x * ScImgWd;
-    var RPos = LPos + ScImgWd;
-    if (LPos < ScLBnd) 
-        ScBx.scrollLeft(RPos - ScWd);    
-    else if (RPos > ScRBnd) 
-        ScBx.scrollLeft(LPos); 
+        var LPos = x * ScImgWd;
+        var RPos = LPos + ScImgWd;
+        if (LPos < ScLBnd) 
+            ScBx.scrollLeft(RPos - ScWd);    
+        else if (RPos > ScRBnd) 
+            ScBx.scrollLeft(LPos); 
+    }
 }
 
 function ImgClick(i) {
@@ -172,4 +184,12 @@ function ViewHov() {
 
 function ViewUnhov() {
     Vw.css('border-image', VwBrdrUnhov);
+}
+
+function LoadJSON() {
+    if (InputBx.val() != "") {
+        JSON = InputBx.val();
+        InputBx.val("");
+        LoadPics();
+    }
 }

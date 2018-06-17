@@ -4,7 +4,7 @@
         <meta name="viewport" content="width=device-width" />
         <title>Nice Dog Dude</title>
         <link rel="shortcut icon" href= "https://cdn.discordapp.com/attachments/454248926963564556/456516632018419712/DogIcon.jpg"> 
-        <script src = "http://code.jquery.com/jquery-latest.min.js"></script><script src = "https://pastebin.com/raw/6nV78Apm"> </script>
+        <script src = "http://code.jquery.com/jquery-latest.min.js"></script><script src = "WebsiteRepo/Scripts.js"> </script>
         <style>
             html, body {
                 margin: 0;  
@@ -91,7 +91,15 @@
                 height:80%; width: 15%;   
                 bottom:3%; 
                 margin:0.5em; padding:0;        
-            }       
+            }    
+            /*-------------- Top Bar --------------*/   
+            #JSON {
+                position:absolute;
+                width:100%; height: 3%;
+                background-color:rgb(0, 0 , 50);
+                color:white;
+                margin:0; padding:0; border:none;
+            }
         </style>
     </head>
     <body> 
@@ -124,6 +132,8 @@
                 <!-- Images To Be Inserted via script -->
             </div>
         </div>
+        <!-- Top Bar -->
+        <input id = "JSON" type = "url">
     </body>
 
     <script>
