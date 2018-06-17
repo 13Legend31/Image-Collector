@@ -4,25 +4,20 @@
         <meta name="viewport" content="width=device-width" />
         <title>Nice Dog Dude</title>
         <link rel="shortcut icon" href= "https://cdn.discordapp.com/attachments/454248926963564556/456516632018419712/DogIcon.jpg"> 
-        <!-- Load In Scripts -->
-        <script src = "http://code.jquery.com/jquery-latest.min.js"></script>
-        <script src = "WebsiteRepo/Scripts.js"> </script>
-        <!-- CSS -->
+        <script src = "http://code.jquery.com/jquery-latest.min.js"></script><script src = "https://pastebin.com/raw/6nV78Apm"> </script>
         <style>
             html, body {
                 margin: 0;  
                 overflow: hidden;
             }
             div {
-                user-select:none;
-                -moz-user-select: -moz-none;
-                -ms-user-select: none;
-                -webkit-user-select: none;
+                user-select:none; -moz-user-select: -moz-none; -ms-user-select: none; -webkit-user-select: none;
             }
             /*-------------- Background --------------*/
-            #Background {
+            #BG {
                 position:absolute;
                 z-index: -1;
+                width: 100%; height: 100%;
             }
             /*-------------- Buttons --------------*/
             button {
@@ -31,8 +26,7 @@
                 border:none;
             }
             .BtnImg {
-                width:100%;
-                height:100%;    
+                width:100%; height:100%;    
             }
             .ArwBtn {
                 background-color:transparent;
@@ -40,20 +34,17 @@
                 opacity: 0.4;
                 z-index: 2;
             }
-            .ArwBtn#BtnR {
-                bottom: 6%;
-                right: 2%;
+            .ArwBtn#RB {
+                bottom: 6%; right: 2%;
             }
-            .ArwBtn#BtnL {
-                bottom: 6%;
-                left: 2%
+            .ArwBtn#LB {
+                bottom: 6%; left: 2%
             }
             /*-------------- Title --------------*/
-            #TitleWrapper {
+            #TitleWrp {
                 position:absolute;
                 left:25%; top: 10%;
-                width:50%;
-                height:8%;
+                width:50%; height:8%;
                 overflow:hidden;
             }
             #Title {
@@ -65,93 +56,78 @@
                 color:rgb(0, 255, 100);
             }
             /*-------------- View Box --------------*/
-            #ViewportWrapper {
+            #VwWrp {
                 position:absolute;
-                width:60%;
-                height:55%;
-                left:20%;
-                top:20%;
+                width:60%; height:55%;
+                left:20%; top:20%;
             }
-            #ImgWrapper {
+            #ImgWrp {
                 position:relative;
-                width:100%;
-                height:100%;               
+                width:100%; height:100%;               
             }
-            #Viewport {
+            #Vw {
                 position:absolute;
                 top: 0; bottom:0; left: 0; right:0;
                 margin:auto;
-                max-width: 100%;
-                max-height: 100%;     
+                max-width: 100%; max-height: 100%;     
             }
             /*-------------- Scroll Boxes --------------*/
-            #ScrollWrapper {
+            #ScWrp {
                 position:absolute;
-                margin:0px;
-                padding:0px;
-                width:75%;
-                height:14%;
-                bottom:6%;
-                left:12.5%;
+                margin:0px; padding:0px;
+                width:75%; height:14%;
+                bottom:6%; left:12.5%;
             }
-            #ScrollBox {
+            #ScBox {
                 position:relative;
-                margin:0;
-                padding:0;
-                height:100%;
-                width:100%;
-                overflow-x:hidden;
-                overflow-y:hidden;
+                margin:0; padding:0;
+                height:100%; width:100%;
+                overflow-x:hidden; overflow-y:hidden;
                 white-space:nowrap;
                 box-shadow: 0 0.3em 1em 0 black, 0 -0.3em 1em 0 black, 0.1em 0 1em 0 red, -0.1em 0 1em 0 red;
             }
-            #ScrollBox img {
+            #ScBox img {
                 position:relative;
-                bottom:3%;
-                height:80%;
-                width: 15%;   
-                margin:0.5em; 
-                padding:0;        
+                height:80%; width: 15%;   
+                bottom:3%; 
+                margin:0.5em; padding:0;        
             }       
         </style>
     </head>
-
-
     <body> 
         <!-- Background Image -->
-        <img id = "Background" src = "http://svite-league-apps-content.s3.amazonaws.com/bgimages/wood.jpg">
+        <img id = "BG" src = "http://svite-league-apps-content.s3.amazonaws.com/bgimages/wood.jpg">
         <!-- Buttons -->
-        <button class="ArwBtn" id="BtnR" onmouseover="ButtonHover('BtnR')" onmouseout="ButtonUnhover('BtnR')" onmousedown="ButtonMouseDown('BtnR')" 
-        onmouseup = "ButtonMouseUp('BtnR')" onclick="GoRight()">
+        <button class="ArwBtn" id="RB" onmouseover="BtnHov('RB')" onmouseout="BtnUnhov('RB')" onmousedown="BtnMDown('RB')" 
+        onmouseup = "BtnMUp('RB')" onclick="GoRight()">
             <img class = "BtnImg" src = "https://raw.githubusercontent.com/13Legend31/Pictures-Website/master/Images/ButtonRight.png">
         </button>
-        <button class="ArwBtn" id="BtnL" onmouseover="ButtonHover('BtnL')" onmouseout="ButtonUnhover('BtnL')" onmousedown="ButtonMouseDown('BtnL')" 
-        onmouseup = "ButtonMouseUp('BtnL')" onclick="GoLeft()">
+        <button class="ArwBtn" id="LB" onmouseover="BtnHov('LB')" onmouseout="BtnUnhov('LB')" onmousedown="BtnMDown('LB')" 
+        onmouseup = "BtnMUp('LB')" onclick="GoLeft()">
             <img class = "BtnImg" src = "https://raw.githubusercontent.com/13Legend31/Pictures-Website/master/Images/ButtonLeft.png">
         </button>
         <!-- Image Title -->
-        <div id = "TitleWrapper">
+        <div id = "TitleWrp">
             <div id = "Title"> 
                 <!-- Text Inserted via script-->
             </div>
         </div>
         <!-- View Box -->
-        <div id = "ViewportWrapper">
-            <div id = "ImgWrapper">
-                <img id = "Viewport" onmouseover = "ViewportHover()" onmouseout = "ViewportUnhover()">    
+        <div id = "VwWrp">
+            <div id = "ImgWrp">
+                <img id = "Vw" onmouseover = "ViewHov()" onmouseout = "ViewUnhov()">    
             </div>
         </div>
         <!-- Scroll Box -->
-        <div id = "ScrollWrapper"> <!-- ScrollBox -->
-            <div id = "ScrollBox" onscroll = "UpdateScrollInfo()"> <!-- ScrollWrapper -->
+        <div id = "ScWrp">
+            <div id = "ScBox" onscroll = "UpdateScrollInfo()">
                 <!-- Images To Be Inserted via script -->
             </div>
         </div>
     </body>
 
-    <!-- Resize Scripts -->
     <script>
-        $(window).load(function() { SetVar(); UpdateSizes(); LoadInPictures(); AddEventListeners(); });
+        $(window).load(function() { SetVar(); UpdateSizes(); LoadPics(); AddEventListeners(); });
         $(window).resize(function() {UpdateSizes(); UpdateScrollInfo();});
     </script>
 </html>
