@@ -1,25 +1,25 @@
-var Images = [];
-var Index = 0;
+var IMGs = [];
+var x = 0;
 var Last = 0;
-var ScrlImgBrdr = '0.3em dotted rgb(0, 153, 255)';
-var ScrlImgHovBrdr = '0.2em dotted rgb(0, 153, 255)';
-var ScrlFirstImgBrdr = '0.2em solid rgb(255, 200, 0)';
+var ScImgBrdr = '0.3em dotted rgb(0, 153, 255)';
+var ScImgHovBrdr = '0.2em dotted rgb(0, 153, 255)';
+var ScFstImgBrdr = '0.2em solid rgb(255, 200, 0)';
 var VwBrdr = '0.3em solid black';
 var VwBrdrHov = 'repeating-linear-gradient(45deg, purple, aqua 1%, purple 1%, aqua 12%) 10';
 var VwBrdrUnhov = 'none';
 var Vw;
 var Title;
 var BrdrImg;
-var ScrlBox;
-var ScrlWidth;
-var ScrlLeftBound;
-var ScrlRightBound;
-var ImgWidth;
+var ScBx;
+var ScWd;
+var ScLBnd;
+var ScRBnd;
+var ImgWd;
 
 function SetVar() {
-    ScrlBox = $("#ScrollBox");
+    ScBx = $("#ScrollBox");
     Vw = $("#Viewport");
-    Title = $("#ImgTitle");
+    Title = $("#Title");
 }
 
 function UpdateSizes() {
@@ -33,34 +33,34 @@ function UpdateSizes() {
 function LoadInPictures() {
     $.getJSON("https://api.myjson.com/bins/lenfy", function(data) {
         $.each(data, function(key, val) {
-            var ScrlIMG = $(document.createElement('img'));
-            ScrlBox.append(ScrlIMG);   
-            Images.push({
-                "IMG" : ScrlIMG,
+            var ScIMG = $(document.createElement('img'));
+            ScBx.append(ScIMG);   
+            IMGs.push({
+                "IMG" : ScIMG,
                 "title" : key,
                 "source" : val  
             });   
-            var Current = Images.length - 1;
-            ScrlIMG.attr('id', key);
-            ScrlIMG.attr('src', val);
-            ScrlIMG.click(function() { ImgClick(Current); });           
-            ScrlIMG.hover(function() { ImgHov(Current); }, function() {ImgUnhov(Current); }); 
+            var Cur = IMGs.length - 1;
+            ScIMG.attr('id', key);
+            ScIMG.attr('src', val);
+            ScIMG.click(function() { ImgClick(Cur); });           
+            ScIMG.hover(function() { ImgHov(Cur); }, function() {ImgUnhov(Cur); }); 
         });
-        Last = Images.length - 1;
+        Last = IMGs.length - 1;
         UpdateScrollInfo();
-        Vw.attr('src', Images[0].source);
+        Vw.attr('src', IMGs[0].source);
         Vw.css('border', VwBrdr);
-        BrdrImg = Images[0].IMG;
-        BrdrImg.css('border', ScrlImgBrdr);
-        Title.text(Images[0].title);
+        BrdrImg = IMGs[0].IMG;
+        BrdrImg.css('border', ScImgBrdr);
+        Title.text(IMGs[0].title);
     });  
 }
 
 function UpdateScrollInfo() {
-    ScrlWidth = ScrlBox.width();
-    ScrlLeftBound = ScrlBox.scrollLeft();
-    ScrlRightBound = ScrlLeftBound + ScrlWidth;
-    ImgWidth = parseInt(Images[0].IMG.css('width')) + 2 * parseInt(Images[0].IMG.css('margin-left'));
+    ScWd = ScBx.width();
+    ScLBnd = ScBx.scrollLeft();
+    ScRBnd = ScLBnd + ScWd;
+    ImgWd = parseInt(IMGs[0].IMG.css('width')) + 2 * parseInt(IMGs[0].IMG.css('margin-left'));
 }
 
 function AddEventListeners() {
@@ -100,73 +100,73 @@ function ButtonMouseUp(ButtonID) {
 }
 
 function GoRight() {
-    if (Index == 0)
-        BrdrImg.css('border', ScrlFirstImgBrdr);
+    if (x == 0)
+        BrdrImg.css('border', ScFstImgBrdr);
     else 
         BrdrImg.css('border', 'none');
-    Index = (Index == Last) ? 0 : Index + 1;
-    BrdrImg = Images[Index].IMG;
-    Vw.attr('src', Images[Index].source);
-    BrdrImg.css('border', ScrlImgBrdr);
-    Title.text(Images[Index].title);
+    x = (x == Last) ? 0 : x + 1;
+    BrdrImg = IMGs[x].IMG;
+    Vw.attr('src', IMGs[x].source);
+    BrdrImg.css('border', ScImgBrdr);
+    Title.text(IMGs[x].title);
 
-    var LeftPos = Index * ImgWidth;
-    var RightPos = LeftPos + ImgWidth;
-    if (RightPos > ScrlRightBound) 
-        ScrlBox.scrollLeft(LeftPos);
-    else if (LeftPos < ScrlLeftBound) 
-        ScrlBox.scrollLeft(RightPos - ScrlWidth);      
+    var LPos = x * ImgWd;
+    var RPos = LPos + ImgWd;
+    if (RPos > ScRBnd) 
+        ScBx.scrollLeft(LPos);
+    else if (LPos < ScLBnd) 
+        ScBx.scrollLeft(RPos - ScWd);      
     
 }
 
 function GoLeft() {
-    if (Index == 0)
-        BrdrImg.css('border', ScrlFirstImgBrdr);
+    if (x == 0)
+        BrdrImg.css('border', ScFstImgBrdr);
     else 
         BrdrImg.css('border', 'none');
-    Index = (Index == 0) ? Last : Index - 1;
-    BrdrImg = Images[Index].IMG;
-    Vw.attr('src', Images[Index].source);
-    BrdrImg.css('border', ScrlImgBrdr);
-    Title.text(Images[Index].title);
+    x = (x == 0) ? Last : x - 1;
+    BrdrImg = IMGs[x].IMG;
+    Vw.attr('src', IMGs[x].source);
+    BrdrImg.css('border', ScImgBrdr);
+    Title.text(IMGs[x].title);
 
-    var LeftPos = Index * ImgWidth;
-    var RightPos = LeftPos + ImgWidth;
-    if (LeftPos < ScrlLeftBound) 
-        ScrlBox.scrollLeft(RightPos - ScrlWidth);    
-    else if (RightPos > ScrlRightBound) 
-        ScrlBox.scrollLeft(LeftPos); 
+    var LPos = x * ImgWd;
+    var RPos = LPos + ImgWd;
+    if (LPos < ScLBnd) 
+        ScBx.scrollLeft(RPos - ScWd);    
+    else if (RPos > ScRBnd) 
+        ScBx.scrollLeft(LPos); 
 }
 
 function ImgClick(i) {
-    Vw.attr('src', Images[i].source);
-    if (Index == 0)
-        BrdrImg.css('border', ScrlFirstImgBrdr);
+    Vw.attr('src', IMGs[i].source);
+    if (x == 0)
+        BrdrImg.css('border', ScFstImgBrdr);
     else 
         BrdrImg.css('border', 'none');
-    Index = i;
-    BrdrImg = Images[Index].IMG;
-    BrdrImg.css('border', ScrlImgBrdr);
-    Title.text(Images[Index].title);
+    x = i;
+    BrdrImg = IMGs[x].IMG;
+    BrdrImg.css('border', ScImgBrdr);
+    Title.text(IMGs[x].title);
 
-    var LeftPos = Index * ImgWidth;
-    var RightPos = LeftPos + ImgWidth;
-    if (RightPos > ScrlRightBound) 
-        ScrlBox.scrollLeft(LeftPos);  
-    else if (LeftPos < ScrlLeftBound) 
-        ScrlBox.scrollLeft(RightPos - ScrlWidth);     
+    var LPos = x * ImgWd;
+    var RPos = LPos + ImgWd;
+    if (RPos > ScRBnd) 
+        ScBx.scrollLeft(LPos);  
+    else if (LPos < ScLBnd) 
+        ScBx.scrollLeft(RPos - ScWd);     
 }
 
 function ImgHov(i) {
-    if (Images[i].IMG != BrdrImg) 
-        Images[i].IMG.css('border', ScrlImgHovBrdr);
+    if (IMGs[i].IMG != BrdrImg) 
+        IMGs[i].IMG.css('border', ScImgHovBrdr);
 }
 
 function ImgUnhov(i) {
-    if (Images[i].IMG != BrdrImg && i == 0)
-        Images[i].IMG.css('border', ScrlFirstImgBrdr);     
-    else if (Images[i].IMG != BrdrImg && i != 0) 
-        Images[i].IMG.css('border', 'none');
+    if (IMGs[i].IMG != BrdrImg && i == 0)
+        IMGs[i].IMG.css('border', ScFstImgBrdr);     
+    else if (IMGs[i].IMG != BrdrImg && i != 0)
+        IMGs[i].IMG.css('border', 'none');
 }
 
 function ViewportHover() {

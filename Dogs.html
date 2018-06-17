@@ -9,20 +9,20 @@
         <script src = "WebsiteRepo/Scripts.js"> </script>
         <!-- CSS -->
         <style>
-            /*-------------- Background --------------*/
             html, body {
                 margin: 0;  
                 overflow: hidden;
-            }
-            #Background {
-                position:absolute;
-                z-index: -1;
             }
             div {
                 user-select:none;
                 -moz-user-select: -moz-none;
                 -ms-user-select: none;
                 -webkit-user-select: none;
+            }
+            /*-------------- Background --------------*/
+            #Background {
+                position:absolute;
+                z-index: -1;
             }
             /*-------------- Buttons --------------*/
             button {
@@ -56,7 +56,7 @@
                 height:8%;
                 overflow:hidden;
             }
-            #ImgTitle {
+            #Title {
                 position:absolute;
                 left:0; right:0; top: -5%;
                 text-align:center;
@@ -120,19 +120,18 @@
     <body> 
         <!-- Background Image -->
         <img id = "Background" src = "http://svite-league-apps-content.s3.amazonaws.com/bgimages/wood.jpg">
-        <!-- ButtonRight -->
+        <!-- Buttons -->
         <button class="ArwBtn" id="BtnR" onmouseover="ButtonHover('BtnR')" onmouseout="ButtonUnhover('BtnR')" onmousedown="ButtonMouseDown('BtnR')" 
         onmouseup = "ButtonMouseUp('BtnR')" onclick="GoRight()">
             <img class = "BtnImg" src = "https://raw.githubusercontent.com/13Legend31/Pictures-Website/master/Images/ButtonRight.png">
         </button>
-        <!-- ButtonLeft -->
         <button class="ArwBtn" id="BtnL" onmouseover="ButtonHover('BtnL')" onmouseout="ButtonUnhover('BtnL')" onmousedown="ButtonMouseDown('BtnL')" 
         onmouseup = "ButtonMouseUp('BtnL')" onclick="GoLeft()">
             <img class = "BtnImg" src = "https://raw.githubusercontent.com/13Legend31/Pictures-Website/master/Images/ButtonLeft.png">
         </button>
         <!-- Image Title -->
         <div id = "TitleWrapper">
-            <div id = "ImgTitle"> 
+            <div id = "Title"> 
                 <!-- Text Inserted via script-->
             </div>
         </div>
