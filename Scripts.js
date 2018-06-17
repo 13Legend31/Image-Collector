@@ -26,12 +26,14 @@ function SetVariables() {
     Title = $("#ImgTitle");
 }
 
-function UpdateBackgroundSize() {
+function UpdateSizes() {
     var background= document.getElementById("Background");
     var ViewportWidth = $(window).width();
     var ViewportHeight = $(window).height();
     background.width = ViewportWidth;
     background.height = ViewportHeight;
+    Title.css('font-size', Math.min(ViewportWidth, ViewportHeight) * 0.062);
+    
 }
 
 function LoadInPictures() {
