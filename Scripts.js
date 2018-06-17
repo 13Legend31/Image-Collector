@@ -90,18 +90,24 @@ function BtnHov(ID) {
 
 function BtnUnhov(ID) {
     $("#" + ID).css('opacity', 0.4);
-    $("#" + ID).css('width', '7%');
-    $("#" + ID).css('height', '14%');
+    if (ID == "LB" || ID == "RB") {
+        $("#" + ID).css('width', '7%');
+        $("#" + ID).css('height', '14%');
+    }
 }
 
 function BtnMDown(ID) {
-    $("#" + ID).css('width', '9%');
-    $('#' + ID).css('height', '18%');
+    if (ID == "LB" || ID == "RB") {
+        $("#" + ID).css('width', '9%');
+        $('#' + ID).css('height', '18%');
+    }
 }
 
 function BtnMUp(ID) {
-    $("#" + ID).css('width', '7%');
-    $("#" + ID).css('height', '14%');
+    if (ID == "LB" || ID == "RB") {
+        $("#" + ID).css('width', '7%');
+        $("#" + ID).css('height', '14%');
+    }
 }
 
 function GoRight() {
