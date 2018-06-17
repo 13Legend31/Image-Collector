@@ -1,70 +1,65 @@
 var Images = [];
 var Index = 0;
-var MaxIndex = 0;
-var ImgBorder = '0.3em dotted rgb(0, 153, 255)';
-var ImgHoverBorder = '0.2em dotted rgb(0, 153, 255)'
-var FirstImgBorder = '0.2em solid rgb(255, 200, 0)'
-var ViewportBorderHover = 'repeating-linear-gradient(45deg, purple, aqua 1%, purple 1%, aqua 12%) 10'
-var ViewportBorderUnhover = 'none';
-var Viewport;
+var Last = 0;
+var ScrlImgBrdr = '0.3em dotted rgb(0, 153, 255)';
+var ScrlImgHovBrdr = '0.2em dotted rgb(0, 153, 255)';
+var ScrlFirstImgBrdr = '0.2em solid rgb(255, 200, 0)';
+var VwBrdr = '0.3em solid black';
+var VwBrdrHov = 'repeating-linear-gradient(45deg, purple, aqua 1%, purple 1%, aqua 12%) 10';
+var VwBrdrUnhov = 'none';
+var Vw;
 var Title;
-var BorderedImg;
-var ScrollBox;
-var ScrollParent;
-var ScrollWidth;
-var ScrollPosLeft;
-var ScrollPosRight;
+var BrdrImg;
+var ScrlBox;
+var ScrlWidth;
+var ScrlLeftBound;
+var ScrlRightBound;
 var ImgWidth;
 
-function SetVariables() {
-    ScrollBox = $("#ScrollWrapper");
-    ScrollBox.scroll(UpdateScrollBox);
-    ScrollParent = $("#ScrollBox");
-    Viewport = $("#Viewport");
-    Viewport.mouseover(ViewportHover);
-    Viewport.mouseout(ViewportUnhover);
+function SetVar() {
+    ScrlBox = $("#ScrollBox");
+    Vw = $("#Viewport");
     Title = $("#ImgTitle");
 }
 
 function UpdateSizes() {
-    var background= document.getElementById("Background");
-    var ViewportWidth = $(window).width();
-    var ViewportHeight = $(window).height();
-    background.width = ViewportWidth;
-    background.height = ViewportHeight;
-    Title.css('font-size', Math.min(ViewportWidth, ViewportHeight) * 0.062);
+    var background = document.getElementById("Background");
+    background.width = $(window).width();
+    background.height = $(window).height();
+    Title.css('font-size', Math.min(background.width, background.height) * 0.062);
     
 }
 
 function LoadInPictures() {
     $.getJSON("https://api.myjson.com/bins/lenfy", function(data) {
         $.each(data, function(key, val) {
-            var IMG = document.createElement('img');
-            ScrollBox.append(IMG);   
+            var ScrlIMG = $(document.createElement('img'));
+            ScrlBox.append(ScrlIMG);   
             Images.push({
-                "IMG" : $(IMG),
+                "IMG" : ScrlIMG,
                 "title" : key,
                 "source" : val  
-            });
-            var Current = Images.length - 1;   
-            Images[Current].IMG.attr('id', key);
-            Images[Current].IMG.attr('src', val);
-            Images[Current].IMG.click(function() { ImgClick(Current); });           
-            Images[Current].IMG.hover(function() { ImgHover(Current); }, function() {ImgUnhover(Current); }); 
+            });   
+            var Current = Images.length - 1;
+            ScrlIMG.attr('id', key);
+            ScrlIMG.attr('src', val);
+            ScrlIMG.click(function() { ImgClick(Current); });           
+            ScrlIMG.hover(function() { ImgHov(Current); }, function() {ImgUnhov(Current); }); 
         });
-        MaxIndex = Images.length - 1;
-        UpdateScrollBox();
-        Viewport.attr('src', Images[0].source);
-        BorderedImg = Images[0].IMG;
-        BorderedImg.css('border', ImgBorder);
+        Last = Images.length - 1;
+        UpdateScrollInfo();
+        Vw.attr('src', Images[0].source);
+        Vw.css('border', VwBrdr);
+        BrdrImg = Images[0].IMG;
+        BrdrImg.css('border', ScrlImgBrdr);
         Title.text(Images[0].title);
     });  
 }
 
-function UpdateScrollBox() {
-    ScrollWidth = ScrollParent.width();
-    ScrollPosLeft = ScrollBox.scrollLeft();
-    ScrollPosRight = ScrollPosLeft + ScrollWidth;
+function UpdateScrollInfo() {
+    ScrlWidth = ScrlBox.width();
+    ScrlLeftBound = ScrlBox.scrollLeft();
+    ScrlRightBound = ScrlLeftBound + ScrlWidth;
     ImgWidth = parseInt(Images[0].IMG.css('width')) + 2 * parseInt(Images[0].IMG.css('margin-left'));
 }
 
@@ -106,85 +101,78 @@ function ButtonMouseUp(ButtonID) {
 
 function GoRight() {
     if (Index == 0)
-        BorderedImg.css('border', FirstImgBorder);
+        BrdrImg.css('border', ScrlFirstImgBrdr);
     else 
-        BorderedImg.css('border', 'none');
-    if (Index != MaxIndex) 
-        Index++;
-    else if (Index == MaxIndex) 
-        Index = 0;
-    BorderedImg = Images[Index];
-    BorderedImg = Images[Index].IMG;
-    Viewport.attr('src', Images[Index].source);
-    BorderedImg.css('border', ImgBorder);
+        BrdrImg.css('border', 'none');
+    Index = (Index == Last) ? 0 : Index + 1;
+    BrdrImg = Images[Index].IMG;
+    Vw.attr('src', Images[Index].source);
+    BrdrImg.css('border', ScrlImgBrdr);
     Title.text(Images[Index].title);
+
     var LeftPos = Index * ImgWidth;
     var RightPos = LeftPos + ImgWidth;
-    if (RightPos > ScrollPosRight) 
-        ScrollBox.scrollLeft(LeftPos);
-    else if (LeftPos < ScrollPosLeft) 
-        ScrollBox.scrollLeft(RightPos - ScrollWidth);      
+    if (RightPos > ScrlRightBound) 
+        ScrlBox.scrollLeft(LeftPos);
+    else if (LeftPos < ScrlLeftBound) 
+        ScrlBox.scrollLeft(RightPos - ScrlWidth);      
     
 }
 
 function GoLeft() {
     if (Index == 0)
-        BorderedImg.css('border', FirstImgBorder);
+        BrdrImg.css('border', ScrlFirstImgBrdr);
     else 
-        BorderedImg.css('border', 'none');
-    if (Index != 0) 
-        Index--; 
-    else if (Index == 0) 
-        Index = MaxIndex;
-    BorderedImg = Images[Index].IMG;
-    Viewport.attr('src', Images[Index].source);
-    BorderedImg.css('border', ImgBorder);
+        BrdrImg.css('border', 'none');
+    Index = (Index == 0) ? Last : Index - 1;
+    BrdrImg = Images[Index].IMG;
+    Vw.attr('src', Images[Index].source);
+    BrdrImg.css('border', ScrlImgBrdr);
     Title.text(Images[Index].title);
 
     var LeftPos = Index * ImgWidth;
     var RightPos = LeftPos + ImgWidth;
-    if (LeftPos < ScrollPosLeft) 
-        ScrollBox.scrollLeft(RightPos - ScrollWidth);    
-    else if (RightPos > ScrollPosRight) 
-        ScrollBox.scrollLeft(LeftPos); 
+    if (LeftPos < ScrlLeftBound) 
+        ScrlBox.scrollLeft(RightPos - ScrlWidth);    
+    else if (RightPos > ScrlRightBound) 
+        ScrlBox.scrollLeft(LeftPos); 
 }
 
 function ImgClick(i) {
-    var BrdImg = document.getElementById(BorderedImg.attr('id'));
-    Viewport.attr('src', Images[i].source);
+    Vw.attr('src', Images[i].source);
     if (Index == 0)
-        BorderedImg.css('border', FirstImgBorder);
+        BrdrImg.css('border', ScrlFirstImgBrdr);
     else 
-        BorderedImg.css('border', 'none');
+        BrdrImg.css('border', 'none');
     Index = i;
-    BorderedImg = Images[Index].IMG;
-    BorderedImg.css('border', ImgBorder);
+    BrdrImg = Images[Index].IMG;
+    BrdrImg.css('border', ScrlImgBrdr);
     Title.text(Images[Index].title);
+
     var LeftPos = Index * ImgWidth;
     var RightPos = LeftPos + ImgWidth;
-    if (RightPos > ScrollPosRight) 
-        ScrollBox.scrollLeft(LeftPos);  
-    else if (LeftPos < ScrollPosLeft) 
-        ScrollBox.scrollLeft(RightPos - ScrollWidth);     
+    if (RightPos > ScrlRightBound) 
+        ScrlBox.scrollLeft(LeftPos);  
+    else if (LeftPos < ScrlLeftBound) 
+        ScrlBox.scrollLeft(RightPos - ScrlWidth);     
 }
 
-function ImgHover(i) {
-    if (Images[i].IMG != BorderedImg) {
-        Images[i].IMG.css('border', ImgHoverBorder);
-    }
+function ImgHov(i) {
+    if (Images[i].IMG != BrdrImg) 
+        Images[i].IMG.css('border', ScrlImgHovBrdr);
 }
 
-function ImgUnhover(i) {
-    if (Images[i].IMG != BorderedImg && i == 0)
-        Images[i].IMG.css('border', FirstImgBorder);     
-    else if (Images[i].IMG != BorderedImg && i != 0) 
+function ImgUnhov(i) {
+    if (Images[i].IMG != BrdrImg && i == 0)
+        Images[i].IMG.css('border', ScrlFirstImgBrdr);     
+    else if (Images[i].IMG != BrdrImg && i != 0) 
         Images[i].IMG.css('border', 'none');
 }
 
 function ViewportHover() {
-    Viewport.css('border-image', ViewportBorderHover);
+    Vw.css('border-image', VwBrdrHov);
 }
 
 function ViewportUnhover() {
-    Viewport.css('border-image', ViewportBorderUnhover)
+    Vw.css('border-image', VwBrdrUnhov);
 }
