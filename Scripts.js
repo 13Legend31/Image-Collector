@@ -2,6 +2,7 @@ var IMGs = [];
 var x = 0;
 var Last = 0;
 var Wndw = $(window);
+var TopBar;
 var InputBx;
 var JSON;
 var BrdrImg;
@@ -20,6 +21,7 @@ var ScRBnd;
 var ScImgWd;
 
 function SetVar() {
+    TopBar = $("#TopBar");
     InputBx = $("#JSON");
     ScBx = $("#ScBox");
     Vw = $("#Vw");
@@ -198,4 +200,12 @@ function LoadJSON() {
         InputBx.val("");
         LoadPics();
     }
+}
+
+function Reveal() {
+    TopBar.css('z-index', 2);
+}
+
+function Hide() {
+    TopBar.css('z-index', -2);
 }
