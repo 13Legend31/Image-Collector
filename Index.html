@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>  
+    <head>
+        <title>Nice Dog Dude</title>
+        <link rel= "shortcut icon" href= "https://cdn.discordapp.com/attachments/454248926963564556/456516632018419712/DogIcon.jpg"> 
+        <script src= "http://code.jquery.com/jquery-latest.min.js"></script><script src= "https://pastebin.com/raw/qiYK7cDU"> </script>
+        <link rel= "stylesheet" type= "text/css" href= "Styles.css"> 
+    </head>
+    <body> 
+        <img id = "Background" src = "http://svite-league-apps-content.s3.amazonaws.com/bgimages/wood.jpg">
+        <button class="ArrowButton" id="RB" onmouseover="ButtonHover('RB')" onmouseout="ButtonUnhover('RB')" onmousedown="ButtonMouseDown('RB')" 
+        onmouseup = "ButtonMouseUp('RB')" onclick="GoRight()">
+            <img class = "ButtonImage" src = "https://raw.githubusercontent.com/13Legend31/Pictures-Website/master/Images/ButtonRight.png">
+        </button>
+        <button class="ArrowButton" id="LB" onmouseover="ButtonHover('LB')" onmouseout="ButtonUnhover('LB')" onmousedown="ButtonMouseDown('LB')" 
+        onmouseup = "ButtonMouseUp('LB')" onclick="GoLeft()">
+            <img class = "ButtonImage" src = "https://raw.githubusercontent.com/13Legend31/Pictures-Website/master/Images/ButtonLeft.png">
+        </button>
+        <div id = "TitleWrap">
+            <div id = "Title"> 
+                <!-- Text Inserted via script-->
+            </div>
+        </div>
+        <div id = "ViewWrapper">
+            <div id = "ViewportWrapper">
+                <img id = "Viewport">    
+            </div>
+        </div>
+        <div id = "ScrollWrapper">
+            <div id = "ScrollBox" onscroll = "Display.UpdateDimensions()">
+                <!-- Images To Be Inserted via script -->
+            </div>
+        </div>
+        <!-- Top Bar -->
+        <button id = "RevealButton" onmouseover="ButtonHover('RevealButton')" onmouseout="ButtonUnhover('RevealButton')" onmousedown="ButtonMouseDown('RevealButton')" 
+        onmouseup = "ButtonMouseUp('RevealButton')" onclick = "TopBar.Reveal()">
+            <img class = "ButtonImage" src = "https://raw.githubusercontent.com/13Legend31/Pictures-Website/master/Images/RevealButton.png">
+        </button>
+        <div id = "TopBar">
+            <input id = "InputBox" type = "url">
+            <button id = "HideButton" onmouseover="ButtonHover('HideButton')" onmouseout="ButtonUnhover('HideButton')" onmousedown="ButtonMouseDown('HideButton')" 
+            onmouseup = "ButtonMouseUp('HideButton')" onclick = "TopBar.Hide()">
+                <img class = "ButtonImage" src = "https://raw.githubusercontent.com/13Legend31/Pictures-Website/master/Images/HideButton.png">
+            </button>
+        </div>
+    </body>
+
+    <script>
+        $(window).load(function() { 
+            OnLoadInitialize();
+            Display.LoadImages("https://api.myjson.com/bins/pebie");
+        });
+        $(window).resize(function() { Display.UpdateDimensions(); });
+    </script>
+</html>

@@ -1,0 +1,113 @@
+html, body {
+    margin: 0;  
+    overflow: hidden;
+}
+div {
+    user-select:none; -moz-user-select: -moz-none; -ms-user-select: none; -webkit-user-select: none;
+}
+/*-------------- Background --------------*/
+#Background {
+    position:absolute;
+    z-index: -1;
+    width: 100%; height: 100%;
+}
+/*-------------- Buttons --------------*/
+button {
+    position:absolute;
+    outline:none; border:none;
+}
+.ButtonImage {
+    width:100%; height:100%;    
+}
+.ArrowButton {
+    background-color:transparent;
+    width:7%; min-width: 20px; height:14%; min-height: 40px;
+    opacity: 0.4;
+    z-index: 2;
+}
+.ArrowButton#RB {
+    bottom: 6%; right: 2%;
+}
+.ArrowButton#LB {
+    bottom: 6%; left: 2%
+}
+/*-------------- Title --------------*/
+#TitleWrap {
+    position:absolute;
+    left:25%; top: 10%;
+    width:50%; height:8%;
+    overflow:hidden;
+}
+#Title {
+    position:absolute;
+    left:0; right:0; top: -5%;
+    text-align:center;
+    font-weight:900;
+    text-shadow: 0.1rem 0.1rem 0.5rem black, -0.1rem -0.1rem 0.5rem black;
+    color:rgb(0, 255, 100);
+}
+/*-------------- Viewport --------------*/
+#ViewWrapper {
+    position:absolute;
+    width:60%; height:55%;
+    left:20%; top:20%;
+}
+#ViewportWrapper {
+    position:relative;
+    width:100%; height:100%;               
+}
+#Viewport {
+    position:absolute;
+    top: 0; bottom:0; left: 0; right:0;
+    margin:auto;
+    max-width: 100%; max-height: 100%;     
+}
+/*-------------- Scroll Boxes --------------*/
+#ScrollWrapper {
+    position:absolute;
+    margin:0px; padding:0px;
+    width:75%; height:14%;
+    bottom:6%; left:12.5%;
+}
+#ScrollBox {
+    position:relative;
+    margin:0; padding:0;
+    height:100%; width:100%;
+    overflow-x:hidden; overflow-y:hidden;
+    white-space:nowrap;
+    box-shadow: 0 0.3em 1em 0 black, 0 -0.3em 1em 0 black, 0.1em 0 1em 0 red, -0.1em 0 1em 0 red;
+}
+#ScrollBox img {
+    position:relative;
+    height:80%; width: 15%;   
+    bottom:3%; 
+    margin:0.5em; padding:0;        
+}    
+/*-------------- Top Bar --------------*/   
+#TopBar {
+    position:absolute;
+    width:50%; height:3%;
+    margin:0; padding:0; border:none;
+    background-color:darkblue;
+    z-index:2;
+}
+#InputBox {
+    position:absolute;
+    left:10%;
+    width:15%; height: 100%;
+    background-color: black;
+    color:white;
+    margin:0; padding:0; border:none;
+}
+#RevealButton {
+    position:absolute;
+    width:5%; height:3%;
+    opacity:0.4; background-color:transparent;
+}
+#HideButton {
+    position:absolute;
+    right:0%;
+    width:10%; height:100%;
+    z-index:1;
+    opacity:0.4; background-color:transparent;
+}
