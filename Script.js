@@ -24,7 +24,7 @@ var Images = (function() {
     // ONLY CALL FROM DISPLAY.LOADIMAGES()
     var LoadImagesFromURL = function(URL, ScrollBox, Viewport, Title) {
         _Images.length = 0; // Clears Images Array
-        _Position = null;
+        _Position = 0;
         $.getJSON(URL, function(data) {
             $.each(data, function(key, val) {
                 var IMG = $(document.createElement('img'));
