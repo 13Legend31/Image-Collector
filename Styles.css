@@ -24,7 +24,6 @@ button {
     width:7%; min-width: 10px; height:14%; min-height: 20px;
     opacity: 0.4;
     z-index: 2;
-    transition: opacity 0s, width 0s, height 0s;
 }
 .ArrowButton:hover {
     opacity:1;  
@@ -68,6 +67,10 @@ button {
     top: 0; bottom:0; left: 0; right:0;
     margin:auto;
     max-width: 100%; max-height: 100%;     
+    border: 0.3em solid black;
+}
+#Viewport:hover {
+    border-image: repeating-linear-gradient(45deg, purple, aqua 1%, purple 1%, aqua 12%) 10;
 }
 /*-------------- Scroll Boxes --------------*/
 #ScrollWrapper {

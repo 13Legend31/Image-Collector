@@ -3,9 +3,6 @@
 const FirstScrollImageBorder = '0.2em solid rgb(255, 200, 0)';
 const ScrollImageBorder = '0.3em dotted rgb(0, 153, 255)';
 const ScrollImageHoverBorder = '0.2em dotted rgb(0, 153, 255)';
-const ViewportBorder = '0.3em solid black';
-const ViewportHoverBorderImage = 'repeating-linear-gradient(45deg, purple, aqua 1%, purple 1%, aqua 12%) 10';
-const ViewportUnhoverBorderImage = 'none';
 
 // ALL Initialize() FUNCTIONS MUST BE CALLED THROUGH OnLoadInitialize()
 // ALL NAMESPACE VARIABLES MUST START WITH A '_'
@@ -25,6 +22,9 @@ var Images = (function() {
     var LoadImagesFromURL = function(URL, ScrollBox, Viewport, Title) {
         _Images.length = 0; // Clears Images Array
         _Position = 0;
+        ScrollBox.empty();
+        Title.empty();
+        Viewport.attr('src', '');
         $.getJSON(URL, function(data) {
             $.each(data, function(key, val) {
                 var IMG = $(document.createElement('img'));
@@ -44,7 +44,6 @@ var Images = (function() {
             _CurrentImage = _Images[0].IMG;
             _CurrentImage.css('border', ScrollImageBorder);
             Viewport.attr('src', _Images[0].src);
-            Viewport.css('border', ViewportBorder);
             Title.text(_Images[0].title);
         });
     }
@@ -112,7 +111,6 @@ var Display = (function() {
         _Viewport = $("#Viewport");
         _Title = $("#Title");
         _Title.css('font-size', Math.min(window.innerWidth, window.innerHeight) * 0.062); 
-        _Viewport.hover(function() { ViewportHover(); }, function() { ViewportUnhover(); });
         _ScrollWidth = _ScrollBox.width();
         _ScrollLeftBound = _ScrollBox.scrollLeft();
         _ScrollRightBound = _ScrollLeftBound + _ScrollWidth;
@@ -127,7 +125,7 @@ var Display = (function() {
         if (IMG)
             _ImageWidth = parseInt(IMG.IMG.css('width')) + 2 * parseInt(IMG.IMG.css('margin-left'));
     }
-    // ONLY CALL THIS FROM INPUT
+    // ONLY CALL THIS FROM INPUT BOX
     // This populates the scrollbox with images
     var LoadImages = function(URL) {
         Images.LoadImagesFromURL(URL, _ScrollBox, _Viewport, _Title);  
@@ -151,18 +149,11 @@ var Display = (function() {
         else if (i === 0)
             _ScrollBox.scrollLeft(0);
     }
-    // Element Interaction Functions
-    function ViewportHover() {
-        _Viewport.css('border-image', ViewportHoverBorderImage);
-    }
-    function ViewportUnhover() {
-        _Viewport.css('border-image', ViewportUnhoverBorderImage);
-    }
     // -----------------------------
     return {
-        UpdateDimensions: UpdateDimensions,
-        LoadImages: LoadImages,
         Initialize: Initialize,
+        LoadImages: LoadImages,
+        UpdateDimensions: UpdateDimensions,
         SetViewportImage: SetViewportImage,
         MoveScrollPosition: MoveScrollPosition
     }
@@ -175,11 +166,12 @@ var TopBar = (function() {
     // Call On Load to Initialize
     var Initialize = function() {
         _TopBar = $("#TopBar");
-        _InputBox = $("InputBox");
+        _InputBox = $("#InputBox");
     }
     var LoadJSON = function() {
-        if (_InputBox.val() != "") {
+        if (_InputBox.val() !== "") {
             var JSON = _InputBox.val();
+            _InputBox.val('');
             Display.LoadImages(JSON);
         }
     }    
@@ -202,6 +194,7 @@ var TopBar = (function() {
 // DO NOT CALL FROM ANYWHERE ELSE
 var LoadDocument = (function() {
     var InitializeNamespaces = function() {
+        Images.Initialize();
         Display.Initialize();
         TopBar.Initialize();
     }
