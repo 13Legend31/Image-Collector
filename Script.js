@@ -12,8 +12,8 @@ const ViewportUnhoverBorderImage = 'none';
 
 // Namespace that handles Images
 var Images = (function() {
-    var _Images = [];
-    var _Position = null;
+    var _Images = []; 
+    var _Position = null; // Current array position
     var _Last = null;
     var _CurrentImage = null;
     
@@ -23,8 +23,8 @@ var Images = (function() {
     // This function loads in the Images from URL into _Images and Display
     // ONLY CALL FROM DISPLAY.LOADIMAGES()
     var LoadImagesFromURL = function(URL, ScrollBox, Viewport, Title) {
-        _Images.length = 0;
-        _Position = 0;
+        _Images.length = 0; // Clears Images Array
+        _Position = null;
         $.getJSON(URL, function(data) {
             $.each(data, function(key, val) {
                 var IMG = $(document.createElement('img'));
@@ -197,39 +197,38 @@ var TopBar = (function() {
     }
 })();
 
-// Called when window loaded to initialize everything
+// All functions in this namespace are called onload
+// Functions are reduced in LoadDocument
 // DO NOT CALL FROM ANYWHERE ELSE
-function OnLoadInitialize() {
-    Display.Initialize();
-    TopBar.Initialize();
-    AddEventListeners();
-}
-
-function ButtonHover(ID) {
-    $("#" + ID).css('opacity', 1);
-}
-
-function ButtonUnhover(ID) {
-    $("#" + ID).css('opacity', 0.4);
-    if (ID === "LB" || ID === "RB") {
-        $("#" + ID).css('width', '7%');
-        $("#" + ID).css('height', '14%');
+var LoadDocument = (function() {
+    var InitializeNamespaces = function() {
+        Display.Initialize();
+        TopBar.Initialize();
     }
-}
-
-function ButtonMouseDown(ID) {
-    if (ID === "LB" || ID === "RB") {
-        $("#" + ID).css('width', '9%');
-        $('#' + ID).css('height', '18%');
+    var AddEventListeners = function() {
+        window.addEventListener("keydown", function(event) { 
+            if (event.keyCode == 39) 
+                GoRight();
+            else if (event.keyCode == 37) 
+                GoLeft();
+            else if (event.keyCode == 13) 
+                TopBar.LoadJSON();
+        });
+        window.addEventListener('mousewheel', function(e) {
+            if (e.wheelDelta < 0) 
+                GoRight(); 
+            else 
+                GoLeft();
+        });
     }
-}
-
-function ButtonMouseUp(ID) {
-    if (ID === "LB" || ID === "RB") {
-        $("#" + ID).css('width', '7%');
-        $("#" + ID).css('height', '14%');
+    // Reducer and interface of load functions
+    var LoadDocument = function() {
+        InitializeNamespaces();
+        AddEventListeners();
     }
-}
+    return LoadDocument;
+})();
+
 function GoRight() {
     var i = Images.Position() + 1;
     Images.SetCurrentImage(i);
@@ -252,21 +251,4 @@ function ImageClick(i) {
     Images.SetCurrentImage(i);
     Display.SetViewportImage(Images.Image(i));
     Display.MoveScrollPosition(i);
-}
-
-function AddEventListeners() {
-    window.addEventListener("keydown", function(event) { 
-        if (event.keyCode == 39) 
-            GoRight();
-        else if (event.keyCode == 37) 
-            GoLeft();
-        else if (event.keyCode == 13) 
-            TopBar.LoadJSON();
-    });
-    window.addEventListener('mousewheel', function(e) {
-        if (e.wheelDelta < 0) 
-            GoRight(); 
-        else 
-            GoLeft();
-    });
 }

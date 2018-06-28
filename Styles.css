@@ -21,9 +21,16 @@ button {
 }
 .ArrowButton {
     background-color:transparent;
-    width:7%; min-width: 20px; height:14%; min-height: 40px;
+    width:7%; min-width: 10px; height:14%; min-height: 20px;
     opacity: 0.4;
     z-index: 2;
+    transition: opacity 0s, width 0s, height 0s;
+}
+.ArrowButton:hover {
+    opacity:1;  
+}
+.ArrowButton:active {
+    width:9%; height:18%;  
 }
 .ArrowButton#RB {
     bottom: 6%; right: 2%;
@@ -94,20 +101,25 @@ button {
 #InputBox {
     position:absolute;
     left:10%;
-    width:15%; height: 100%;
+    width:25%; height: 100%;
     background-color: black;
     color:white;
     margin:0; padding:0; border:none;
 }
-#RevealButton {
+.TopBarButton {
     position:absolute;
+    background-color: transparent;
+    opacity:0.4;
+    transition:opacity 0s;
+}
+.TopBarButton:hover {
+    opacity:1;
+}
+#RevealButton {
     width:5%; height:3%;
-    opacity:0.4; background-color:transparent;
 }
 #HideButton {
-    position:absolute;
     right:0%;
     width:10%; height:100%;
     z-index:1;
-    opacity:0.4; background-color:transparent;
 }
