@@ -10,7 +10,7 @@ const ScrollImageHoverBorder = '0.2em dotted rgb(0, 153, 255)';
 // Namespace that handles Images
 var Images = (function() {
     var _Images = []; 
-    var _Position = null; // Current array position
+    var _Position = null; // Current _Images position
     var _Last = null;
     var _CurrentImage = null;
     
@@ -20,46 +20,45 @@ var Images = (function() {
     // This function loads in the Images from URL into _Images and Display
     // ONLY CALL FROM DISPLAY.LOADIMAGES()
     var LoadImagesFromURL = function(URL, ScrollBox, Viewport, Title) {
-        _Images.length = 0; // Clears Images Array
+        // Clears Display
+        _Images.length = 0; 
         _Position = 0;
         ScrollBox.empty();
         Title.empty();
         Viewport.attr('src', '');
+        // --------------------------
         $.getJSON(URL, function(data) {
             $.each(data, function(key, val) {
-                var IMG = $(document.createElement('img'));
-                _Images.push({
-                    IMG : IMG,
-                    title : key,
-                    src : val  
-                });
-                IMG.attr('id', key);
-                IMG.attr('src', val);
-                var Index = _Images.length - 1;         
-                IMG.hover(function() { Hover(Index); }, function() { Unhover(Index); }); 
-                IMG.click(function() { ImageClick(Index); });
+                var IMG = document.createElement('img');
+                IMG.id = key;
+                IMG.src = val;
+                _Images.push(IMG);
+                var Index = _Images.length - 1;  
+                IMG.addEventListener('mouseover', function() { Hover(Index); });
+                IMG.addEventListener('mouseout', function() { Unhover(Index); });       
+                IMG.addEventListener('click', function() {ImageClick(Index); });
                 ScrollBox.append(IMG);
             }); 
             _Last = _Images.length - 1;
-            _CurrentImage = _Images[0].IMG;
-            _CurrentImage.css('border', ScrollImageBorder);
+            _CurrentImage = _Images[0];
+            _CurrentImage.style.border = ScrollImageBorder;
             Viewport.attr('src', _Images[0].src);
-            Title.text(_Images[0].title);
+            Title.text(_Images[0].id);
         });
     }
     var SetCurrentImage = function(i) {
         if (_Position === 0)
-            _CurrentImage.css('border', FirstScrollImageBorder);
+            _CurrentImage.style.border = FirstScrollImageBorder;
         else
-            _CurrentImage.css('border', 'none');
+            _CurrentImage.style.border = 'none';
         if (i < 0) 
             _Position = _Last; 
         else if (i > _Last) 
             _Position = 0;
         else 
             _Position = i;
-        _CurrentImage = _Images[_Position].IMG;
-        _CurrentImage.css('border', ScrollImageBorder);  
+        _CurrentImage = _Images[_Position];
+        _CurrentImage.style.border = ScrollImageBorder;  
     }
     // Getters -----------
     var Image = function(i) {
@@ -74,14 +73,14 @@ var Images = (function() {
     // ----------------------------
     // Element Interaction Functions
     function Hover(i) {
-        if (_Images[i].IMG !== _CurrentImage) 
-            _Images[i].IMG.css('border', ScrollImageHoverBorder); 
+        if (_Images[i] !== _CurrentImage) 
+            _Images[i].style.border = ScrollImageHoverBorder; 
     }
     function Unhover(i) {
-        if (_Images[i].IMG !== _CurrentImage && i == 0)
-            _Images[i].IMG.css('border', FirstScrollImageBorder);     
-        else if (_Images[i].IMG != _CurrentImage)
-            _Images[i].IMG.css('border', 'none'); 
+        if (_Images[i] !== _CurrentImage && i == 0)
+            _Images[i].style.border = FirstScrollImageBorder;     
+        else if (_Images[i] !== _CurrentImage)
+            _Images[i].style.border = 'none'; 
     }
     // ---------------------------
     return {
@@ -123,7 +122,7 @@ var Display = (function() {
         _ScrollRightBound = _ScrollLeftBound + _ScrollWidth;
         var IMG = Images.Image(0);
         if (IMG)
-            _ImageWidth = parseInt(IMG.IMG.css('width')) + 2 * parseInt(IMG.IMG.css('margin-left'));
+            _ImageWidth = IMG.clientWidth + 2 * parseInt(window.getComputedStyle(IMG).margin);
     }
     // ONLY CALL THIS FROM INPUT BOX
     // This populates the scrollbox with images
@@ -132,14 +131,13 @@ var Display = (function() {
     }
     var SetViewportImage = function(IMG) {
         _Viewport.attr('src', IMG.src);
-        _Title.text(IMG.title);        
+        _Title.text(IMG.id);        
     }
     var MoveScrollPosition = function(i) {
         if (_ImageWidth === -1) {
             var IMG = Images.Image(0);
-            _ImageWidth = parseInt(IMG.IMG.css('width')) + 2 * parseInt(IMG.IMG.css('margin-left'));
+            _ImageWidth = IMG.clientWidth + 2 * parseInt(window.getComputedStyle(IMG).margin);
         }
-
         var LeftPosition = i * _ImageWidth;
         var RightPosition = LeftPosition + _ImageWidth;
         if (RightPosition > _ScrollRightBound) 
