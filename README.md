@@ -22,4 +22,5 @@ Currently loads in a JSON file in the following format and displays to screen:
   "title2": "url2",
   .....
 }
+/
 All operations are handled client side
