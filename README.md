@@ -24,3 +24,15 @@ Currently loads in a JSON file in the following format and displays to screen:
 }
 <br/>
 All operations are handled client side
+# Architecture
+Consists of 3 components:<br/>
+1. Display<br/>
+2. Images<br/>
+3. TopBar<br/>
+<br/>
+Display handles viewport and scrollbar functionality<br/>
+Images handles loading images from URL and appending to scrollbar<br/>
+TopBar aceepts a URL and calls Images.LoadImages()<br/>
+<br/>
+<br/>
+In the final version, TopBar should facilitate album creation, deletion, access and clientside-server side communications
