@@ -3,15 +3,15 @@
     <head>
         <title>Image Collector</title>
         <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'>
-        <script src= "http://code.jquery.com/jquery-latest.min.js"></script><script src= "https://pastebin.com/raw/tHNZstPE"> </script>
+        <script src= "http://code.jquery.com/jquery-latest.min.js"></script><script src= "Script.js"> </script>
         <link rel= "stylesheet" type= "text/css" href= "Styles.css"> 
     </head>
     <body> 
         <img id = "Background" src = "http://svite-league-apps-content.s3.amazonaws.com/bgimages/wood.jpg">
-        <button class="ArrowButton" id="RB" onclick="GoRight()">
+        <button class="ArrowButton" id="RB">
             <img class = "ButtonImage" src = "https://raw.githubusercontent.com/13Legend31/Pictures-Website/master/Images/ButtonRight.png">
         </button>
-        <button class="ArrowButton" id="LB" onclick="GoLeft()">
+        <button class="ArrowButton" id="LB">
             <img class = "ButtonImage" src = "https://raw.githubusercontent.com/13Legend31/Pictures-Website/master/Images/ButtonLeft.png">
         </button>
         <div id = "TitleWrap">
@@ -30,12 +30,12 @@
             </div>
         </div>
         <!-- Top Bar -->
-        <button class ="TopBarButton" id = "RevealButton" onclick = "TopBar.Reveal()">
+        <button class ="TopBarButton" id = "RevealButton">
             <img class = "ButtonImage" src = "https://raw.githubusercontent.com/13Legend31/Pictures-Website/master/Images/RevealButton.png">
         </button>
         <div id = "TopBar">
             <input id = "InputBox" type = "url">
-            <button class ="TopBarButton" id = "HideButton" onclick = "TopBar.Hide()">
+            <button class ="TopBarButton" id = "HideButton">
                 <img class = "ButtonImage" src = "https://raw.githubusercontent.com/13Legend31/Pictures-Website/master/Images/HideButton.png">
             </button>
         </div>

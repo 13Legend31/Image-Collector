@@ -1,7 +1,5 @@
 * {
-    box-sizing:border-box;
-    position:absolute;
-    margin:0; padding:0; outline:0; border:none;
+    margin:0; padding:0; border:none; outline:none;
     user-select:none; -moz-user-select: -moz-none; -ms-user-select: none; -webkit-user-select: none;
 }
 html, body {
@@ -9,10 +7,14 @@ html, body {
 }
 /*-------------- Background --------------*/
 #Background {
+    position:absolute;
     z-index: -1;
     width: 100%; height: 100%;
 }
 /*-------------- Buttons --------------*/
+button {
+    position:absolute;
+}
 .ButtonImage {
     width:100%; height:100%;    
 }
@@ -36,11 +38,13 @@ html, body {
 }
 /*-------------- Title --------------*/
 #TitleWrap {
+    position:absolute;
     left:25%; top: 10%;
     width:50%; height:8%;
     overflow:hidden;
 }
 #Title {
+    position:absolute;
     left:0; right:0; top: -5%;
     text-align:center;
     font-weight:900;
@@ -49,13 +53,16 @@ html, body {
 }
 /*-------------- Viewport --------------*/
 #ViewWrapper {
+    position:absolute;
     width:60%; height:55%;
     left:20%; top:20%;
 }
 #ViewportWrapper {
+    position:relative;
     width:100%; height:100%;               
 }
 #Viewport {
+    position:absolute;
     top: 0; bottom:0; left: 0; right:0;
     margin:auto;
     max-width: 100%; max-height: 100%;     
@@ -66,10 +73,12 @@ html, body {
 }
 /*-------------- Scroll Boxes --------------*/
 #ScrollWrapper {
+    position:absolute;
     width:75%; height:14%;
     bottom:6%; left:12.5%;
 }
 #ScrollBox {
+    position:relative;
     height:100%; width:100%;
     overflow-x:hidden; overflow-y:hidden;
     white-space:nowrap;
@@ -83,17 +92,20 @@ html, body {
 }    
 /*-------------- Top Bar --------------*/   
 #TopBar {
+    position:absolute;
     width:50%; height:3%;
     background-color:darkblue;
     z-index:2;
 }
 #InputBox {
+    position:absolute;
     left:10%;
     width:25%; height: 100%;
     background-color: black;
     color:white;
 }
 .TopBarButton {
+    position:absolute;
     background-color: transparent;
     opacity:0.4;
     transition:opacity 0s;

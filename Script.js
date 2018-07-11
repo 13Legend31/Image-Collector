@@ -1,23 +1,21 @@
 "use strict";
-// CSS Borders
-
 // ALL Initialize() FUNCTIONS MUST BE CALLED THROUGH OnLoadInitialize()
 // ALL NAMESPACE VARIABLES MUST START WITH A '_'
 
 // Namespace that handles Images
 var Images = (function() {
-    // CSS Borders
-    var FirstScrollImageBorder = '0.2em solid rgb(255, 200, 0)';
-    var ScrollImageBorder = '0.3em dotted rgb(0, 153, 255)';
-    var ScrollImageHoverBorder = '0.2em dotted rgb(0, 153, 255)';
+    // CSS Image Borders
+    var _FirstBorder = '0.2em solid rgb(255, 200, 0)',
+        _Border = '0.3em dotted rgb(0, 153, 255)',
+        _HoverBorder = '0.2em dotted rgb(0, 153, 255)';
     // Image details
-    var _Images = []; 
-    var _Position = null; // Current _Images position
-    var _Last = null;
-    var _CurrentImage = null;
+    var _Images = [], 
+        _Position = null, // Current _Images position
+        _Last = null,
+        _CurrentImage = null;
     
     var Initialize = function () {
-        // This function may be useful later in development
+        // Function might be useful in future development
     }
     // This function loads in the Images from URL into _Images and Display
     // ONLY CALL FROM DISPLAY.LOADIMAGES()
@@ -43,16 +41,13 @@ var Images = (function() {
             }); 
             _Last = _Images.length - 1;
             _CurrentImage = _Images[0];
-            _CurrentImage.style.border = ScrollImageBorder;
+            _CurrentImage.style.border = _Border;
             Viewport.attr('src', _Images[0].src);
             Title.text(_Images[0].id);
         });
     }
     var SetCurrentImage = function(i) {
-        if (_Position === 0)
-            _CurrentImage.style.border = FirstScrollImageBorder;
-        else
-            _CurrentImage.style.border = 'none';
+        _CurrentImage.style.border = _Position === 0 ? _FirstBorder: 'none';
         if (i < 0) 
             _Position = _Last; 
         else if (i > _Last) 
@@ -60,7 +55,7 @@ var Images = (function() {
         else 
             _Position = i;
         _CurrentImage = _Images[_Position];
-        _CurrentImage.style.border = ScrollImageBorder;  
+        _CurrentImage.style.border = _Border;  
     }
     // Getters -----------
     var Image = function(i) {
@@ -76,11 +71,11 @@ var Images = (function() {
     // Element Interaction Functions
     function Hover(i) {
         if (_Images[i] !== _CurrentImage) 
-            _Images[i].style.border = ScrollImageHoverBorder; 
+            _Images[i].style.border = _HoverBorder; 
     }
     function Unhover(i) {
         if (_Images[i] !== _CurrentImage && i == 0)
-            _Images[i].style.border = FirstScrollImageBorder;     
+            _Images[i].style.border = _FirstBorder;     
         else if (_Images[i] !== _CurrentImage)
             _Images[i].style.border = 'none'; 
     }
@@ -97,14 +92,14 @@ var Images = (function() {
 // Namespace that handles scrollbar and viewport
 var Display = (function() {
     // References ------
-    var _ScrollBox = null;
-    var _Viewport = null;
-    var _Title = null;
+    var _ScrollBox = null,
+        _Viewport = null,
+        _Title = null;
     // Dimensions ------
-    var _ScrollWidth = -1;
-    var _ScrollLeftBound = -1;
-    var _ScrollRightBound = -1;
-    var _ImageWidth = -1;
+    var _ScrollWidth = -1,
+        _ScrollLeftBound = -1,
+        _ScrollRightBound = -1,
+        _ImageWidth = -1;
 
     // Called on load to initialize all variables except ImageWidth
     var Initialize = function() {
@@ -170,10 +165,9 @@ var TopBar = (function() {
     }
     var LoadJSON = function() {
         if (_InputBox.val() !== "") {
-            var JSON = _InputBox.val();
+            Display.LoadImages(_InputBox.val());
             _InputBox.val('');
-            Display.LoadImages(JSON);
-        }
+        }        
     }    
     var Hide = function() {
         _TopBar.css('z-index', -2);
@@ -213,6 +207,10 @@ var LoadDocument = (function() {
             else 
                 GoLeft();
         });
+        document.getElementById('RB').addEventListener('click', GoRight);
+        document.getElementById('LB').addEventListener('click', GoLeft);
+        document.getElementById('RevealButton').addEventListener('click', TopBar.Reveal);
+        document.getElementById('HideButton').addEventListener('click', TopBar.Hide);
     }
     // Reducer and interface of load functions
     var LoadDocument = function() {
