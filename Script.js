@@ -1,21 +1,23 @@
 "use strict";
 // CSS Borders
-const FirstScrollImageBorder = '0.2em solid rgb(255, 200, 0)';
-const ScrollImageBorder = '0.3em dotted rgb(0, 153, 255)';
-const ScrollImageHoverBorder = '0.2em dotted rgb(0, 153, 255)';
 
 // ALL Initialize() FUNCTIONS MUST BE CALLED THROUGH OnLoadInitialize()
 // ALL NAMESPACE VARIABLES MUST START WITH A '_'
 
 // Namespace that handles Images
 var Images = (function() {
+    // CSS Borders
+    var FirstScrollImageBorder = '0.2em solid rgb(255, 200, 0)';
+    var ScrollImageBorder = '0.3em dotted rgb(0, 153, 255)';
+    var ScrollImageHoverBorder = '0.2em dotted rgb(0, 153, 255)';
+    // Image details
     var _Images = []; 
     var _Position = null; // Current _Images position
     var _Last = null;
     var _CurrentImage = null;
     
     var Initialize = function () {
-
+        // This function may be useful later in development
     }
     // This function loads in the Images from URL into _Images and Display
     // ONLY CALL FROM DISPLAY.LOADIMAGES()
