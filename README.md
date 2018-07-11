@@ -35,5 +35,6 @@ Images handles loading images from URL and appending to scrollbar<br/>
 TopBar aceepts a URL and calls Images.LoadImages()<br/>
 <br/>
 <br/>
+
 # Currently In Process of Porting Over To Reactjs
 In the final version, TopBar should facilitate album creation, deletion, access and clientside-server side communications
